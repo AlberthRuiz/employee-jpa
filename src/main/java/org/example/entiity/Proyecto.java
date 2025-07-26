@@ -34,6 +34,16 @@ public class Proyecto {
         PLANIFICACION, EN_PROGRESO, COMPLETADO, CANCELADO
     }
 
+    public void agregarEmpelado(Empleado emp){
+        this.empleados.add(emp);
+        emp.getProyectos().add(this);
+    }
+
+    public void removerEmpleado(Empleado emp){
+        this.empleados.remove(emp);
+        emp.getProyectos().remove(emp);
+    }
+
     public Proyecto(){
 
     }

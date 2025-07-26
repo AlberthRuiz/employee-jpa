@@ -3,6 +3,9 @@ package org.example.entiity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "employee")
 public class Empleado {
@@ -18,26 +21,25 @@ public class Empleado {
 
     @Column(name = "salario")
     private Double salario;
+
     @ManyToOne
     @JoinColumn(name = "departamento_id")
     private Departamento departamento;
 
+    @ManyToMany
+    @JoinTable(
+            name = "empleado_proyecto",
+            joinColumns = @JoinColumn(name = "empleado_id"),
+            inverseJoinColumns = @JoinColumn(name = "proyecto_id")
+    )
+    private List<Proyecto> proyectos = new ArrayList<Proyecto>();
+
+
     public Empleado() {
     }
 
-    public Empleado(LocalDate fechaIngreso, long id, String nombre, Double salario) {
-        this.fechaIngreso = fechaIngreso;
-        this.id = id;
-        this.nombre = nombre;
-        this.salario = salario;
-    }
-
-    public Empleado(long id, String nombre, LocalDate fechaIngreso, Double salario, Departamento departamento) {
-        this.id = id;
-        this.nombre = nombre;
-        this.fechaIngreso = fechaIngreso;
-        this.salario = salario;
-        this.departamento = departamento;
+    public List<Proyecto> getProyectos() {
+        return proyectos;
     }
 
     public Departamento getDepartamento() {

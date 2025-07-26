@@ -64,7 +64,12 @@ public class Departamento {
         this.presuepuesto = presuepuesto;
     }
     public void agregarEmpleados(Empleado empleado){
-        empleado.setDepartamento(this);
         this.empleados.add(empleado);
+        empleado.setDepartamento(this);
     }
+    public void removerEmpleado(Empleado empleado){
+        empleados.remove(empleado);
+        empleado.setDepartamento(null);
+    }
+
 }
