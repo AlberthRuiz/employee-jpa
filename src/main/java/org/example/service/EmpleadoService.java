@@ -7,13 +7,9 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class EmpleadoService {
-    public void crearEmpleado(EntityManager em){
+    public void crearEmpleado(EntityManager em, Empleado empleado ){
         em.getTransaction().begin();
         try{
-            Empleado empleado = new Empleado();
-            empleado.setNombre("Juan");
-            empleado.setFechaIngreso(LocalDate.of(2021,1,1));
-            empleado.setSalario(1125.0);
             em.persist(empleado);
             em.getTransaction().commit();
         } catch (Exception e) {

@@ -1,26 +1,40 @@
 package org.example.service;
 
 import jakarta.persistence.EntityManager;
+import org.example.entiity.Empleado;
 import org.example.entiity.Proyecto;
 
 import java.time.LocalDate;
 
 public class ProyectosService {
-    public void crearProyecto(EntityManager em){
+    public void crearProyecto(EntityManager em, Proyecto proyecto){
         em.getTransaction().begin();
         try{
-            Proyecto proyecto = new Proyecto();
-            proyecto.setNombre("Camelot");
-            proyecto.setDescripcion("Despliegue de pods en EKS para migracion de arq monolito");
-            proyecto.setFechaInicio(LocalDate.of(2025,1, 15));
-            proyecto.setFechaFin(LocalDate.of(2025,4, 30));
-            proyecto.setPresupuesto(125000d);
-            proyecto.setEstado(Proyecto.EstadoProyecto.EN_PROGRESO);
             em.persist(proyecto);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
             System.out.println("Error en ejecucion ->" + e.getMessage());
         }
+    }
+
+    public void asignarEmpleadoAPRoyecto(EntityManager em, Long empleado_id, Long proyecto_id){
+        em.getTransaction().begin();
+
+        try{
+            Proyecto proyecto = em.find(Proyecto.class, proyecto_id);
+            Empleado empleado = em.find(Empleado.class, empleado_id);
+            if(proyecto != null  && empleado!=null){
+                proyecto.agregarEmpelado(empleado);
+                em.getTransaction().commit();
+            }else{
+                em.getTransaction().rollback();
+                System.out.println("No se encontro proyecto");
+            }
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            System.out.println("Error en ejecucion ->" + e.getMessage());
+        }
+
     }
 }
