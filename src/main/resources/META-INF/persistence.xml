@@ -4,10 +4,10 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
              https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
-    <persistence-unit name="EmpleadosPU" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="EmpleadosPU" >
 
         <class>org.example.entity.Empleado</class>
-        <class>org.example.entiity.Departamento</class>
+        <class>org.example.entity.Departamento</class>
 
         <properties>
 

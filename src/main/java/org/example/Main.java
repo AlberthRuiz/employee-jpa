@@ -18,8 +18,8 @@ public class Main {
            // EmpleadoService empleadoService = new EmpleadoService();
             //empleadoService.crearEmpleado(em);
             DepartamentoService departamentoService = new DepartamentoService();
-            departamentoService.crearDepartamento(em);
-            //departamentoService.crearDepartamentoConEmpleados(em);
+            //departamentoService.crearDepartamento(em);
+            departamentoService.crearDepartamentoConEmpleados(em);
 
 
 

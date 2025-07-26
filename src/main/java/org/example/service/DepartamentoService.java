@@ -15,7 +15,7 @@ public class DepartamentoService {
         try{
             Departamento departamento = new Departamento();
             departamento.setNombre("Oficina Control Interno");
-            departamento.setUbicacion("Segundo Piso");
+            departamento.setUbicacion("Piso 2");
             departamento.setPresuepuesto(1250000d);
             em.persist(departamento);
             em.getTransaction().commit();
@@ -52,7 +52,8 @@ public class DepartamentoService {
 
             departamentoTec.agregarEmpleados(dev1);
             departamentoTec.agregarEmpleados(dev2);
-
+            em.persist(departamentoTec);
+            em.persist(departamentoRRHH);
             em.persist(dev1);
             em.persist(dev2);
 
