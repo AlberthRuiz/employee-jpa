@@ -6,9 +6,11 @@
              version="3.0">
     <persistence-unit name="EmpleadosPU">
         <class>org.example.entity.Empleado</class>
+        <class>org.example.entity.Proyecto</class>
+        <class>org.example.entity.Departamento</class>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/emplyeedb"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/employeedb"/>
             <property name="jakarta.persistence.jdbc.user" value="root"/>
             <property name="jakarta.persistence.jdbc.password" value="mysql"/>
             <!-- Dialecto Hibernate -->

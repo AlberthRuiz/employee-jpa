@@ -1,47 +1,78 @@
 package org.example.entiity;
 
 import jakarta.persistence.*;
-
+import java.math.BigDecimal;
 import java.time.LocalDate;
-@Entity
-@Table(name = "employee")
-public class Empleado {
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private long id;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-    @Column(name= "nombre", length = 180, nullable = false)
+
+@Entity
+@Table(name = "empleados")
+public class Empleado {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "nombre", length = 200, nullable = false)
     private String nombre;
 
     @Column(name = "fecha_ingreso")
     private LocalDate fechaIngreso;
 
-    @Column(name = "salario")
-    private Double salario;
+    @Column(name = "salario", precision = 10, scale = 2)
+    private BigDecimal salario;
+
+    @Column(name = "email", length = 100, unique = true)
+    private String email;
+
+    /**
+     * Relación ManyToOne: Muchos empleados pertenecen a un departamento
+     * @JoinColumn: Especifica la columna de clave foránea en la tabla empleados
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "departamento_id")
+    private Departamento departamento;
+
+    /**
+     * Relación ManyToMany: Empleados pueden trabajar en múltiples proyectos
+     * (Por ahora solo declaramos, crearemos Proyecto en el siguiente paso)
+     */
+    @ManyToMany
+    @JoinTable(
+            name = "empleado_proyecto",
+            joinColumns = @JoinColumn(name = "empleado_id"),
+            inverseJoinColumns = @JoinColumn(name = "proyecto_id")
+    )
+    private List<Proyecto> proyectos = new ArrayList<>();
+
+
 
     public Empleado() {
     }
 
-    public Empleado(LocalDate fechaIngreso, long id, String nombre, Double salario) {
-        this.fechaIngreso = fechaIngreso;
-        this.id = id;
+    public Empleado(String nombre, LocalDate fechaIngreso, BigDecimal salario) {
         this.nombre = nombre;
+        this.fechaIngreso = fechaIngreso;
         this.salario = salario;
     }
 
-    public LocalDate getFechaIngreso() {
-        return fechaIngreso;
-    }
-
-    public void setFechaIngreso(LocalDate fechaIngreso) {
+    // Nuevo constructor con email
+    public Empleado(String nombre, LocalDate fechaIngreso, BigDecimal salario, String email) {
+        this.nombre = nombre;
         this.fechaIngreso = fechaIngreso;
+        this.salario = salario;
+        this.email = email;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,11 +84,55 @@ public class Empleado {
         this.nombre = nombre;
     }
 
-    public Double getSalario() {
+    public LocalDate getFechaIngreso() {
+        return fechaIngreso;
+    }
+
+    public void setFechaIngreso(LocalDate fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
+
+    public BigDecimal getSalario() {
         return salario;
     }
 
-    public void setSalario(Double salario) {
+    public void setSalario(BigDecimal salario) {
         this.salario = salario;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
+
+    public List<Proyecto> getProyectos() {
+        return proyectos;
+    }
+
+    public void setProyectos(List<Proyecto> proyectos) {
+        this.proyectos = proyectos;
+    }
+
+    @Override
+    public String toString() {
+        return "Empleado{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", fechaIngreso=" + fechaIngreso +
+                ", salario=" + salario +
+                ", email='" + email + '\'' +
+                ", departamento=" + (departamento != null ? departamento.getNombre() : "Sin asignar") +
+                '}';
     }
 }
