@@ -33,7 +33,6 @@ public class Main {
             consultarRelaciones(em, deptService, proyService);
             operacionesCrudAvanzadas(em, empService);
             generarReportes(em, empService, proyService);
-
         } catch (Exception e) {
             System.err.println("Error en la aplicación: " + e.getMessage());
             e.printStackTrace();
